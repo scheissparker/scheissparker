@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheissparker – Falschparker melden</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>Scheissparker</h1>
+    <p class="subtitle">Report a bad park job</p>
+
+    <div class="preview" id="preview">
+      <span id="previewPlaceholder">Kein Foto ausgewählt</span>
+      <img id="previewImage" alt="Vorschau" hidden>
+    </div>
+
+    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+    <button id="uploadBtn" class="btn btn-upload">Foto auswählen</button>
+
+    <input 
+      type="text" 
+      id="instaHandle" 
+      placeholder="@instagram (optional, für Tagging)"
+      maxlength="31"
+      autocomplete="off"
+      spellcheck="false"
+    >
+
+    <button id="submitBtn" class="btn btn-submit" disabled>
+      <span id="submitSpinner" class="spinner"></span>
+      <span id="submitBtnText">Melden</span>
+    </button>
+
+    <div id="statusBox" class="status-box" role="alert" aria-live="polite">
+      <div id="statusLoadingSpinner" class="spinner"></div>
+      <div class="status-content">
+        <div class="status-title" id="statusTitle"></div>
+        <div class="status-desc" id="statusDesc"></div>
+      </div>
+    </div>
+
+    <button id="resetBtn" class="btn btn-reset" hidden>Neues Foto melden</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
