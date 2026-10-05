@@ -1,14 +1,16 @@
-// Falls das Frontend separat gehostet wird (z. B. auf scheissparker.github.io),
-// trage hier die HTTPS-Adresse deines Ubuntu-Servers oder Cloudflare-Tunnels ein:
-// Beispiel: const BACKEND_URL = 'https://api.deinedomain.de';
-const BACKEND_URL = '';
+// Backend-Server-Konfiguration:
+// IP deines Ubuntu-Servers: 130.61.102.57 auf Port 31200
+const DEFAULT_SERVER_URL = 'http://130.61.102.57:31200';
+
+// Live Cloudflare Tunnel URL fuer dein Backend auf Port 31200:
+const BACKEND_URL = 'https://hint-flooring-suggestion-instructional.trycloudflare.com';
 
 // Automatische Ermittlung:
 const API_BASE_URL = BACKEND_URL
   ? BACKEND_URL.replace(/\/+$/, '')
-  : (window.location.origin.startsWith('http') && !window.location.port.includes('5500') && !window.location.hostname.includes('github.io')
-      ? '' 
-      : 'http://localhost:31200');
+  : (window.location.hostname.includes('github.io')
+      ? DEFAULT_SERVER_URL
+      : (window.location.origin.startsWith('http') && !window.location.port.includes('5500') ? '' : DEFAULT_SERVER_URL));
 
 const fileInput = document.getElementById('fileInput');
 const uploadBtn = document.getElementById('uploadBtn');
