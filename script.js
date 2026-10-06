@@ -2,7 +2,7 @@
 // IP deines Ubuntu-Servers: 130.61.102.57 auf Port 31200
 const DEFAULT_SERVER_URL = 'http://130.61.102.57:31200';
 
-// Live Cloudflare Tunnel URL fuer dein Backend auf Port 31200:
+// Live Cloudflare Tunnel URL für dein Backend auf Port 31200:
 const BACKEND_URL = 'https://hint-flooring-suggestion-instructional.trycloudflare.com';
 
 // Automatische Ermittlung:
@@ -24,6 +24,12 @@ const statusBox = document.getElementById('statusBox');
 const statusTitle = document.getElementById('statusTitle');
 const statusDesc = document.getElementById('statusDesc');
 const resetBtn = document.getElementById('resetBtn');
+
+// Info modal elements
+const infoBtn = document.getElementById('infoBtn');
+const infoModal = document.getElementById('infoModal');
+const closeInfoBtn = document.getElementById('closeInfoBtn');
+const infoModalBackdrop = document.getElementById('infoModalBackdrop');
 
 let selectedFile = null;
 
@@ -55,18 +61,21 @@ function resetForm() {
   hideStatus();
 }
 
-uploadBtn.addEventListener('click', () => {
-  fileInput.click();
-});
-
-fileInput.addEventListener('change', () => {
-  const file = fileInput.files[0];
+function handleFileSelection(file) {
   if (!file) return;
 
   // Max 15 MB client-side check
   const maxBytes = 15 * 1024 * 1024;
   if (file.size > maxBytes) {
-    showStatus('error', 'Datei zu gross', 'Das Bild darf maximal 15 MB gross sein.');
+    showStatus('error', 'Datei zu groß', 'Das Bild darf maximal 15 MB groß sein.');
+    fileInput.value = '';
+    return;
+  }
+
+  // Validate supported image MIME types
+  const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!validTypes.includes(file.type)) {
+    showStatus('error', 'Ungültiges Dateiformat', 'Bitte lade ein JPG-, PNG- oder WebP-Bild hoch.');
     fileInput.value = '';
     return;
   }
@@ -83,7 +92,64 @@ fileInput.addEventListener('change', () => {
     resetBtn.hidden = true;
   };
   reader.readAsDataURL(file);
+}
+
+uploadBtn.addEventListener('click', () => {
+  fileInput.click();
 });
+
+// Allow clicking preview area to select image if none is currently selected
+preview.addEventListener('click', (e) => {
+  if (!selectedFile) {
+    fileInput.click();
+  }
+});
+
+// Drag & drop support on preview area
+preview.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  if (!selectedFile) {
+    preview.classList.add('dragover');
+  }
+});
+
+preview.addEventListener('dragleave', () => {
+  preview.classList.remove('dragover');
+});
+
+preview.addEventListener('drop', (e) => {
+  e.preventDefault();
+  preview.classList.remove('dragover');
+  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    handleFileSelection(e.dataTransfer.files[0]);
+  }
+});
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files && fileInput.files[0]) {
+    handleFileSelection(fileInput.files[0]);
+  }
+});
+
+// Info Modal event handlers
+if (infoBtn && infoModal) {
+  infoBtn.addEventListener('click', () => {
+    infoModal.hidden = false;
+  });
+
+  const closeModal = () => {
+    infoModal.hidden = true;
+  };
+
+  if (closeInfoBtn) closeInfoBtn.addEventListener('click', closeModal);
+  if (infoModalBackdrop) infoModalBackdrop.addEventListener('click', closeModal);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !infoModal.hidden) {
+      closeModal();
+    }
+  });
+}
 
 submitBtn.addEventListener('click', async () => {
   if (!selectedFile) return;
@@ -95,7 +161,7 @@ submitBtn.addEventListener('click', async () => {
     const rawUser = handle.startsWith('@') ? handle.slice(1) : handle;
     const valid = /^[a-zA-Z0-9._]{1,30}$/.test(rawUser);
     if (!valid) {
-      showStatus('error', 'Ungueltiger Instagram-Name', 'Erlaubt sind 1-30 Zeichen (Buchstaben, Zahlen, Punkte, Unterstriche).');
+      showStatus('error', 'Ungültiger Instagram-Name', 'Erlaubt sind 1–30 Zeichen (Buchstaben, Zahlen, Punkte, Unterstriche).');
       return;
     }
   }
@@ -110,7 +176,7 @@ submitBtn.addEventListener('click', async () => {
   showStatus(
     'loading',
     'KI analysiert Bild...',
-    'OpenRouter prueft, ob es sich um ein Kraftfahrzeug oder eine Parksituation handelt...'
+    'Die KI prüft, ob es sich um ein Kraftfahrzeug und eine Parksituation handelt...'
   );
 
   const formData = new FormData();
@@ -131,7 +197,7 @@ submitBtn.addEventListener('click', async () => {
       // Success
       const reason = data.analysis?.reason || 'Fahrzeug erfolgreich verifiziert.';
       const handleNote = data.instagram_handle ? ` (Instagram: ${data.instagram_handle})` : '';
-      const channelInfo = data.discord_channels_count > 1 ? ` in ${data.discord_channels_count} Kanaelen` : '';
+      const channelInfo = data.discord_channels_count > 1 ? ` in ${data.discord_channels_count} Kanälen` : '';
       showStatus(
         'success',
         'Falschparker verifiziert und auf Discord gepostet',
@@ -168,7 +234,7 @@ submitBtn.addEventListener('click', async () => {
     showStatus(
       'error',
       'Verbindungsfehler',
-      `Backend nicht erreichbar (${API_BASE_URL}). Stelle sicher, dass der Server laeuft.`
+      `Backend nicht erreichbar (${API_BASE_URL}). Stelle sicher, dass der Server läuft.`
     );
     submitBtn.disabled = false;
     uploadBtn.disabled = false;

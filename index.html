@@ -3,32 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scheissparker – Falschparker melden:</title>
+  <title>Scheissparker – Falschparker melden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="card">
-    <h1>Scheissparker</h1>
-    <p class="subtitle">Scheissparker melden</p>
+    <!-- Info Button (Top Right Placeholder) -->
+    <button id="infoBtn" class="info-btn" type="button" aria-label="Informationen" title="Informationen">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+    </button>
 
-    <div class="preview" id="preview">
-      <span id="previewPlaceholder">Kein Foto ausgewählt</span>
+    <header class="card-header">
+      <h1>Scheissparker</h1>
+      <p class="subtitle">Falschparker melden</p>
+    </header>
+
+    <div class="preview" id="preview" tabindex="0" role="button" aria-label="Foto auswählen oder ablegen">
+      <div id="previewPlaceholder" class="preview-placeholder">
+        <svg class="preview-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter">
+          <rect x="3" y="3" width="18" height="18"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+        <span class="placeholder-title">Kein Foto ausgewählt</span>
+        <span class="placeholder-subtitle">Klicken oder Datei hier ablegen</span>
+      </div>
       <img id="previewImage" alt="Vorschau" hidden>
     </div>
 
     <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
-    <button id="uploadBtn" class="btn btn-upload">Foto auswählen</button>
+    <button id="uploadBtn" class="btn btn-upload" type="button">Foto auswählen</button>
 
     <input 
       type="text" 
       id="instaHandle" 
-      placeholder="@instagram (optional, für Tagging)"
+      placeholder="@dein_instagram (optional)"
       maxlength="31"
       autocomplete="off"
       spellcheck="false"
     >
 
-    <button id="submitBtn" class="btn btn-submit" disabled>
+    <button id="submitBtn" class="btn btn-submit" type="button" disabled>
       <span id="submitSpinner" class="spinner"></span>
       <span id="submitBtnText">Melden</span>
     </button>
@@ -41,8 +63,23 @@
       </div>
     </div>
 
-    <button id="resetBtn" class="btn btn-reset" hidden>Neues Foto melden</button>
+    <button id="resetBtn" class="btn btn-reset" type="button" hidden>Neues Foto melden</button>
   </main>
+
+  <!-- Info Modal Dialog -->
+  <div id="infoModal" class="info-modal" hidden>
+    <div class="info-modal-backdrop" id="infoModalBackdrop"></div>
+    <div class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+      <div class="info-modal-header">
+        <h2 id="infoModalTitle">Hinweise</h2>
+        <button id="closeInfoBtn" class="close-info-btn" type="button" aria-label="Schließen">&times;</button>
+      </div>
+      <div class="info-modal-body">
+        <p>Bitte lade keine privaten Fotos oder Inhalte hoch. Achte darauf, dass keine Personen, Gesichter oder andere persönliche Daten auf dem Bild zu sehen sind.</p>
+        <p>Bitte beachte außerdem, dass alle hochgeladenen Fotos zur automatischen KI-Prüfung extern bei OpenRouter verarbeitet werden.</p>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
