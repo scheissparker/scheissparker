@@ -1,6 +1,6 @@
 ## scheissparker
 
-This github page has been made to provide the sourcecode for all the tools we use for our instagram account. You may use these tools for your own one or get some inpiration
+This GitHub repository provides the source code for all the tools we use to manage our Instagram account. Feel free to use these tools for your own account or draw inspiration from them.
 
 [Submit a photo](https://scheissparker.github.io/) or [See the posts on Instagram](https://www.instagram.com/scheissparker.kreis.nom/)
 
