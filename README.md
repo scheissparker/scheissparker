@@ -1,16 +1,21 @@
-## Hi there 👋
+## scheissparker
 
-<!--
-**scheissparker/scheissparker** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+This github page has been made to provide the sourcecode for all the tools we use for our instagram account. You may use these tools for your own one or get some inpiration
 
-Here are some ideas to get you started:
+[Submit a photo](https://scheissparker.github.io/) or [See the posts on Instagram](https://www.instagram.com/scheissparker.kreis.nom/)
+```mermaid
+---
+config:
+  htmlLabels: false
+---
+flowchart LR
+    Submit["Submit a photo"] --> Review["Review"] --> Share["Share on Instagram"]
+```
+### Projects
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- The website where people submit parking photos. [Upload site source](https://github.com/scheissparker/scheissparker.github.io)
+- A CPU-only web app for detecting and covering license plates in batches of photos. [censor-plate](https://github.com/scheissparker/censor-plate)
+
+### People
+
+[@jqvxz](https://github.com/jqvxz) and [@jkbsndvs](https://github.com/jkbsndvs)
