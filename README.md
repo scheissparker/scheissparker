@@ -3,14 +3,7 @@
 This github page has been made to provide the sourcecode for all the tools we use for our instagram account. You may use these tools for your own one or get some inpiration
 
 [Submit a photo](https://scheissparker.github.io/) or [See the posts on Instagram](https://www.instagram.com/scheissparker.kreis.nom/)
-```mermaid
----
-config:
-  htmlLabels: false
----
-flowchart LR
-    Submit["Submit a photo"] --> Review["Review"] --> Share["Share on Instagram"]
-```
+
 ### Projects
 
 - The website where people submit parking photos. [Upload site source](https://github.com/scheissparker/scheissparker.github.io)
@@ -19,3 +12,14 @@ flowchart LR
 ### People
 
 [@jqvxz](https://github.com/jqvxz) and [@jkbsndvs](https://github.com/jkbsndvs)
+
+```mermaid
+---
+config:
+  htmlLabels: false
+---
+flowchart LR
+    Submit([Submit a photo]) --> Review([Review]) --> Share([Share on Instagram])
+    classDef published fill:#163d2d,stroke:#3fb950,color:#eefaf1
+    class Share published
+```
